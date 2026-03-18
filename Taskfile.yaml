@@ -1,0 +1,35 @@
+version: '3'
+
+vars:
+  COMPOSE_PROD: docker-compose.yml
+  COMPOSE_MAINT: docker-compose.maint.yml
+
+tasks:
+  up:
+    desc: Start the Production Stack (Grafana, Prometheus, Gitea)
+    cmds:
+      - task: down
+      - docker compose -f {{.COMPOSE_PROD}} up -d
+    silent: true
+
+  maintenance:on:
+    desc: Enable Maintenance Mode
+    cmds:
+      - echo "Switching to Maintenance Mode..."
+      - docker compose -f {{.COMPOSE_PROD}} down --remove-orphans
+      - docker compose -f {{.COMPOSE_MAINT}} up -d
+    silent: true
+
+  maintenance:off:
+    desc: Disable Maintenance Mode and Restore Services
+    cmds:
+      - echo "Restoring Production Services..."
+      - docker compose -f {{.COMPOSE_MAINT}} down
+      - task: up
+    silent: true
+
+  down:
+    desc: Stop all containers
+    cmds:
+      - docker compose -f {{.COMPOSE_PROD}} down
+      - docker compose -f {{.COMPOSE_MAINT}} down
