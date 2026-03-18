@@ -5,14 +5,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project'
-                sh 'docker ps -a'
+                sh 'task up'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests'
-                sh 'task --version'
+                sh 'docker ps -a'
             }
         }
     }
