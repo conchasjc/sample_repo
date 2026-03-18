@@ -27,6 +27,7 @@ services:
     networks:
       - monitoring_network
     volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
       - ./prometheus_config:/etc/prometheus
       - prometheus_data:/prometheus
     command:
