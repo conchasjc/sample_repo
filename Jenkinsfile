@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project'
-                sh 'docker ps -a'
+                sh 'sudo docker ps -a'
             }
         }
 
