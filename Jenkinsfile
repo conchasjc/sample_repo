@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Build Servers') {
             steps {
                 echo 'Building project'
                 sh 'task up'
