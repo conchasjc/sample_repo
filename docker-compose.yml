@@ -27,7 +27,6 @@ services:
     networks:
       - monitoring_network
     volumes:
-      - ./grafana/datasources:/etc/grafana/provisioning/datasources
       - ./prometheus_config:/etc/prometheus
       - prometheus_data:/prometheus
     command:
@@ -48,6 +47,7 @@ services:
     ports:
       - "3001:3000" # Mapped to 3001 because Gitea usually takes 3000
     volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
       - grafana_data:/var/lib/grafana
 
 networks:
