@@ -6,7 +6,7 @@ vars:
 
 tasks:
   up:
-    desc: Start the Production Stack (Grafana, Prometheus, Gitea)
+    desc: Start the Production Stack (Grafana, Prometheus)
     cmds:
       - task: down
       - docker compose -f {{.COMPOSE_PROD}} up -d
@@ -33,3 +33,18 @@ tasks:
     cmds:
       - docker compose -f {{.COMPOSE_PROD}} down
       - docker compose -f {{.COMPOSE_MAINT}} down
+
+  restart:grafana:
+    desc: Restart Grafana service
+    cmds:
+      - docker compose -f {{.COMPOSE_PROD}} restart grafana
+
+  restart:prometheus:
+    desc: Restart Prometheus service
+    cmds:
+      - docker compose -f {{.COMPOSE_PROD}} restart prometheus
+
+  restart:all:
+    desc: Restart Grafana and Prometheus
+    cmds:
+      - docker compose -f {{.COMPOSE_PROD}} restart grafana prometheus
