@@ -1,38 +1,33 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'ACTION',
+            choices: ['up', 'down', 'maintenance:on', 'maintenance:off', 'restart:grafana', 'restart:prometheus', 'restart:all'],
+            description: 'Select which Taskfile action to run'
+        )
+    }
+
     stages {
         stage('Select Action') {
             steps {
-                script {
-                    // Choose which Taskfile task to run based on a parameter
-                    def selectedTask = params.ACTION ?: "up"
-                    echo "Running Taskfile action: ${selectedTask}"
-                    
-                }
+                echo "Selected Taskfile action: ${params.ACTION}"
             }
         }
 
         stage('Execute Action') {
             steps {
-                echo 'Building project'
-                sh "task ${selectedTask}"
+                echo "Executing Taskfile action..."
+                sh "task ${params.ACTION}"
             }
         }
 
         stage('Output Container Status') {
             steps {
-                echo 'Running tests'
+                echo 'Showing Container Status'
                 sh 'docker ps -a'
             }
         }
-    }
-
-    parameters {
-        choice(
-            name: 'ACTION',
-            choices: ['up', 'down', 'maintenance:on', 'maintenance:off', 'restart:grafana', 'restart:prometheus', 'restart:all'],
-            description: 'Select which Taskfile action to run after git pull'
-        )
     }
 }
