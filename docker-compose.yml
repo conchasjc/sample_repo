@@ -20,7 +20,7 @@ services:
   #     - "2222:22"
 
   # --- PROMETHEUS: Metrics Scraper ---
-  prometheus:
+  prometheus_serv:
     image: prom/prometheus:latest
     container_name: prometheus
     restart: always
@@ -36,14 +36,14 @@ services:
       - "9090:9090"
 
   # --- GRAFANA: Visualization Dashboards ---
-  grafana:
+  grafana_serv:
     image: grafana/grafana:latest
     container_name: grafana
     restart: always
     networks:
       - monitoring_network
     depends_on:
-      - prometheus
+      - prometheus_serv
     ports:
       - "3001:3000" # Mapped to 3001 because Gitea usually takes 3000
     volumes:
