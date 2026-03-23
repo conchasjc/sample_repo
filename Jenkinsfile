@@ -16,6 +16,9 @@ pipeline {
     stages {
         stage('Select Action') {
             steps {
+                script {
+                    currentBuild.description = "ACTION = ${params.ACTION}"
+                }
                 echo "Selected Taskfile action: ${params.ACTION}"
             }
         }
