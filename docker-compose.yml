@@ -22,7 +22,7 @@ services:
   # --- PROMETHEUS: Metrics Scraper ---
   prometheus_serv:
     image: prom/prometheus:latest
-    container_name: prometheus_server
+    container_name: prometheus_servers
     restart: always
     networks:
       - monitoring_network
@@ -38,7 +38,7 @@ services:
   # --- GRAFANA: Visualization Dashboards ---
   grafana_serv:
     image: grafana/grafana:latest
-    container_name: grafana_server
+    container_name: grafana_servers
     restart: always
     networks:
       - monitoring_network
